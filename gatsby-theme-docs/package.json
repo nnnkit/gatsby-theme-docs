@@ -1,11 +1,11 @@
 {
-  "name": "gatsby-theme-elementary",
+  "name": "gatsby-theme-docs",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Ankit <iankit17@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nnnkit/gatsby-theme-elementary.git"
+    "url": "https://github.com/nnnkit/gatsby-theme-docs.git"
   },
   "license": "MIT",
   "scripts": {
@@ -28,8 +28,8 @@
     "@mdx-js/react": "^1.0.21",
     "gatsby": "2.13.50",
     "gatsby-plugin-theme-ui": "^0.2.2",
-    "react": "16.8.6",
-    "react-dom": "16.8.6",
+    "react": "16.9.0",
+    "react-dom": "16.9.0",
     "theme-ui": "^0.2.2"
   },
   "keywords": [

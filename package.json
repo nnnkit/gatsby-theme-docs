@@ -1,5 +1,5 @@
 {
-  "name": "elementary",
+  "name": "docs",
   "version": "1.0.0",
   "private": true,
   "main": "index.js",
@@ -10,7 +10,7 @@
     "start": "yarn workspace demo develop"
   },
   "workspaces": [
-    "gatsby-theme-elementary",
+    "gatsby-theme-docs",
     "demo"
   ]
 }
