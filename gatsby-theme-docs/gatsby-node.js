@@ -4,7 +4,7 @@ let basePath, contentPath, assetPath;
 
 exports.onPreBootstrap = ({ reporter, store }, themeOptions) => {
   basePath = themeOptions.basePath || "/";
-  contentPath = themeOptions.contentPath || "content/post";
+  contentPath = themeOptions.contentPath || "content/docs";
   assetPath = themeOptions.assetPath || "content/assets";
 
   const {
