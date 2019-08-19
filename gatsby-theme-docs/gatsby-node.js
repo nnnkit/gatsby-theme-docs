@@ -28,3 +28,10 @@ exports.createPages = ({ actions, reporter }) => {
     component: require.resolve("./src/templates/home.js")
   });
 };
+exports.onCreateNode = ({ node, getNode }) => {
+  // console.log(node.internal.type, "in onCreateNode");
+  // console.log(node.component, "in component");
+  if (node.internal.type === "Mdx") {
+    console.log(node.internal, "in mdx");
+  }
+};

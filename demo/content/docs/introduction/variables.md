@@ -1,5 +1,5 @@
 ---
-title: Hello, world!
+title: Variables!
 path: /hello-world
 date: 2019 - 01 - 29
 ---
