@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 let basePath, contentPath, assetPath;
 
+// Creating the folders for content of it doesn't exist
 exports.onPreBootstrap = ({ reporter, store }, themeOptions) => {
   basePath = themeOptions.basePath || "/";
   contentPath = themeOptions.contentPath || "content/docs";
@@ -32,49 +33,30 @@ exports.onCreateNode = async (
   { node, getNode, actions, createNodeId, loadNodeContent },
   themeOptions
 ) => {
-  const { createNode } = actions;
-
   // Create source field (according to contentPath)
-  const fileNode = getNode(node.parent);
-  const source = fileNode && fileNode.sourceInstanceName;
+
+  // const source = fileNode && fileNode.sourceInstanceName;
+
   if (node.internal.type !== "Mdx") {
     return;
   }
-  const content = await loadNodeContent(node);
-  if (node.internal.type === "Mdx" && source === themeOptions.contentPath) {
-    createNode({
-      name: "Testing",
-      id: createNodeId(`${node.id} Docs`),
+
+  // const content = await loadNodeContent(node);
+  if (node.internal.type === "Mdx") {
+    const { createNode, createNodeField } = actions;
+    const fileNode =
+      node.parent && node.parent !== "undefined" ? getNode(node.parent) : node;
+    const { dir = ``, name } = path.parse(fileNode.relativePath);
+    console.log(dir, name, "in gatsby node");
+    createNodeField({
       node,
-      content
+      name: `slug`,
+      value: path.posix.join(`/docs`, dir, name)
+    });
+    createNodeField({
+      node,
+      name: `category`,
+      value: fileNode.relativeDirectory
     });
   }
-};
-
-exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
-  const { createNode } = actions;
-
-  // Data can come from anywhere, but for now create it manually
-  const myData = {
-    key: 123,
-    foo: `The foo field of my node`,
-    bar: `Baz`
-  };
-
-  const nodeContent = JSON.stringify(myData);
-
-  const nodeMeta = {
-    id: createNodeId(`my-data-${myData.key}`),
-    parent: null,
-    children: [],
-    internal: {
-      type: `MyNodeType`,
-      mediaType: `text/html`,
-      content: nodeContent,
-      contentDigest: createContentDigest(myData)
-    }
-  };
-
-  const node = Object.assign({}, myData, nodeMeta);
-  createNode(node);
 };
