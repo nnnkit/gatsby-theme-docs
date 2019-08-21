@@ -9,16 +9,16 @@ module.exports = {
       options: {
         extensions: [".mdx", ".md"],
         ignore: ["**/node_modules"],
-        name: `content/docs`,
+        name: `docs`,
         path: `content/docs`
       }
     },
-    "gatsby-plugin-theme-ui",
     {
       resolve: "gatsby-plugin-mdx",
       options: {
         extensions: [`.mdx`, `.md`]
       }
-    }
+    },
+    "gatsby-plugin-theme-ui"
   ]
 };

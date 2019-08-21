@@ -28,10 +28,53 @@ exports.createPages = ({ actions, reporter }) => {
     component: require.resolve("./src/templates/home.js")
   });
 };
-exports.onCreateNode = ({ node, getNode }) => {
-  // console.log(node.internal.type, "in onCreateNode");
-  // console.log(node.component, "in component");
-  if (node.internal.type === "Mdx") {
-    console.log(node.internal, "in mdx");
+exports.onCreateNode = async (
+  { node, getNode, actions, createNodeId, loadNodeContent },
+  themeOptions
+) => {
+  const { createNode } = actions;
+
+  // Create source field (according to contentPath)
+  const fileNode = getNode(node.parent);
+  const source = fileNode && fileNode.sourceInstanceName;
+  if (node.internal.type !== "Mdx") {
+    return;
   }
+  const content = await loadNodeContent(node);
+  if (node.internal.type === "Mdx" && source === themeOptions.contentPath) {
+    createNode({
+      name: "Testing",
+      id: createNodeId(`${node.id} Docs`),
+      node,
+      content
+    });
+  }
+};
+
+exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
+  const { createNode } = actions;
+
+  // Data can come from anywhere, but for now create it manually
+  const myData = {
+    key: 123,
+    foo: `The foo field of my node`,
+    bar: `Baz`
+  };
+
+  const nodeContent = JSON.stringify(myData);
+
+  const nodeMeta = {
+    id: createNodeId(`my-data-${myData.key}`),
+    parent: null,
+    children: [],
+    internal: {
+      type: `MyNodeType`,
+      mediaType: `text/html`,
+      content: nodeContent,
+      contentDigest: createContentDigest(myData)
+    }
+  };
+
+  const node = Object.assign({}, myData, nodeMeta);
+  createNode(node);
 };
