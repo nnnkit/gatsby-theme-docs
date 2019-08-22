@@ -6,10 +6,7 @@ const templates = {
   docs: path.resolve(templatesDir, "docs.js")
 };
 
-module.exports = async (
-  { actions: { createPage }, graphql, reporter },
-  themeOptions
-) => {
+module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
   const basePath = themeOptions.basePath || "/";
   createPage({
     path: basePath,
@@ -28,7 +25,6 @@ module.exports = async (
       }
     }
   `);
-  // allDocs.data.allMdx.edges.forEach(one => console.log(one, "in foreach"));
   allDocs.data.allMdx.edges.forEach(({ node }) => {
     createPage({
       path: node.fields.slug,

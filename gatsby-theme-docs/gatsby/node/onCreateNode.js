@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = async (
   { node, getNode, actions: { createNodeField } },
   themeOptions
@@ -15,7 +17,7 @@ module.exports = async (
     createNodeField({
       node,
       name: `slug`,
-      value: path.posix.join(`/docs`, dir, name)
+      value: path.posix.join(themeOptions.basePath, dir, name)
     });
     createNodeField({
       node,
