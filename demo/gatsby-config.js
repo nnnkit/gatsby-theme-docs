@@ -3,7 +3,7 @@ module.exports = {
     {
       resolve: "gatsby-theme-docs",
       options: {
-        basePath: "/",
+        basePath: "/main",
         contentPath: "content/docs"
       }
     }

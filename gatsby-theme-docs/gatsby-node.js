@@ -23,27 +23,50 @@ exports.onPreBootstrap = ({ reporter, store }, themeOptions) => {
   });
 };
 
-exports.createPages = ({ actions, reporter }) => {
-  actions.createPage({
+exports.createPages = async ({
+  actions: { createPage },
+  graphql,
+  reporter
+}) => {
+  createPage({
     path: basePath,
     component: require.resolve("./src/templates/home.js")
   });
+  const allDocs = await graphql(`
+    {
+      allMdx {
+        edges {
+          node {
+            fields {
+              slug
+            }
+          }
+        }
+      }
+    }
+  `);
+  // allDocs.data.allMdx.edges.forEach(one => console.log(one, "in foreach"));
+  allDocs.data.allMdx.edges.forEach(({ node }) => {
+    createPage({
+      path: node.fields.slug,
+      component: require.resolve("./src/templates/docs.js"),
+      context: {
+        slug: node.fields.slug
+      }
+    });
+  });
 };
+
 exports.onCreateNode = async (
-  { node, getNode, actions, createNodeId, loadNodeContent },
+  { node, getNode, actions: { createNodeField } },
   themeOptions
 ) => {
-  // Create source field (according to contentPath)
-
-  // const source = fileNode && fileNode.sourceInstanceName;
-
   if (node.internal.type !== "Mdx") {
     return;
   }
 
   // const content = await loadNodeContent(node);
   if (node.internal.type === "Mdx") {
-    const { createNode, createNodeField } = actions;
     const fileNode =
       node.parent && node.parent !== "undefined" ? getNode(node.parent) : node;
     const { dir = ``, name } = path.parse(fileNode.relativePath);
