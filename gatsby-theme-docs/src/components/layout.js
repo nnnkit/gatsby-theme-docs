@@ -1,24 +1,29 @@
 /** @jsx jsx */
 import { css, Styled } from "theme-ui";
-import { jsx } from "theme-ui";
+import { jsx, Layout, Main, Flex, Box } from "theme-ui";
 import Header from "./header";
 
-const Layout = ({ children, ...props }) => {
+const PageLayout = ({ children, ...props }) => {
   return (
     <Styled.root>
-      <div>
-        <div
-          css={css({
-            maxWidth: `container`,
-            mx: `auto`
-          })}
-        >
+      <div
+        css={css({
+          maxWidth: `container`,
+          mx: `auto`
+        })}
+      >
+        <Layout>
           <Header {...props} />
-          {children}
-        </div>
+          <Main>
+            <Flex>
+              <Box>Hello</Box>
+              <Box>{children}</Box>
+            </Flex>
+          </Main>
+        </Layout>
       </div>
     </Styled.root>
   );
 };
 
-export default Layout;
+export default PageLayout;
