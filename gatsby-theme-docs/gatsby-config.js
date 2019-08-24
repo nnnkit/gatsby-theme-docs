@@ -19,7 +19,6 @@ module.exports = {
         extensions: [`.mdx`, `.md`]
       }
     },
-    "gatsby-plugin-theme-ui",
-    "gatsby-theme-sidebar"
+    "gatsby-plugin-theme-ui"
   ]
 };
