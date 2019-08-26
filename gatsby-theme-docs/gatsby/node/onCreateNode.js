@@ -24,5 +24,13 @@ module.exports = async (
       name: `category`,
       value: fileNode.relativeDirectory
     });
+    createNodeField({
+      node,
+      name: `displayTitle`,
+      value: name
+        .split("__")
+        .slice(-1)
+        .pop()
+    });
   }
 };
